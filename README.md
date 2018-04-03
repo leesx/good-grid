@@ -43,4 +43,32 @@
 
 > align-items 定义网格布局中的子元素的垂直方向的布局,可取值 [start | end | center | stretch]
 
+
+> demo1 图文混排
+
 ![demo21](./images/demo1.png)
+
+> demo2 百度热词
+
+![demo2](./images/demo2.png)
+
+> demo3 百度新闻
+
+![demo3](./images/demo3.png)
+
+> demo4 淘宝精选
+
+![demo4](./images/demo4.png)
+
+> demo5 品质生活家
+
+![demo5](./images/demo5.png)
+
+> demo1 九宫格
+
+![demo6](./images/demo6.png)
+
+> demo7 魔盒演示
+
+![demo7](./images/demo7.png)
+
