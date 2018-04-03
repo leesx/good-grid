@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>grid网格布局经典用例</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            box-sizing: border-box;
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-weight: 400;
+        }
+
+        html {
+            font-size: 10px;
+        }
+
+        a {
+            color: #555;
+            font-size: 12px;
+            text-decoration: none;
+        }
+
+        a:active,
+        a:hover {
+            color: #333;
+        }
+
+        .container {
+            display: grid;
+            height: 100vh;
+            background: #ccc;
+            /* grid-template-rows: 1fr 1fr 1fr; */
+            grid-template-columns: [left-aside] 240px [main] auto [right-aside] 240px;
+            grid-gap: 10px;
+        }
+
+        .container>.item {
+            /* display: flex; */
+            /* align-items: center; */
+            /* justify-content: center; */
+            /* border: 1px solid #f60; */
+            font-size: 2rem;
+        }
+
+        .item.main-container {
+            padding: 10px;
+            overflow: auto;
+            display: grid;
+            grid-row-gap: 20px;
+        }
+
+        .mod-title {
+            display: flex;
+            height: 30px;
+            padding: 10px;
+            border-left: 2px solid #f60;
+            align-items: center;
+        }
+
+        .list ul {
+            display: grid;
+            /* grid-template-rows: 30px; */
+            grid-gap: 10px;
+        }
+
+        .list ul li {
+            border-bottom: 1px dashed #ccc;
+        }
+
+        /* 图文混排 */
+
+        .media-box {
+            display: grid;
+            background-color: bisque;
+            grid-template-columns: [photo] 120px [news] auto;
+            grid-column-gap: 10px;
+            padding: 10px;
+        }
+
+        .media-box .photo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: #ddd;
+            font-size: 16px;
+            overflow: hidden;
+        }
+
+        .media-box .photo img {
+            max-width: 100%;
+        }
+
+        .media-box .intro h4 {
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        /* 百度热词 */
+
+        .hot-keywords {
+            display: grid;
+            grid-template-columns: repeat(6, 91px);
+            grid-template-rows: repeat(2, 91px);
+            grid-gap: 2px;
+
+        }
+
+        .hot-keywords li {
+            display: flex;
+            font-size: 14px;
+            background: #42a8db;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hot-keywords li:hover {
+            background: #0c56a4;
+        }
+
+        .hot-keywords li a {
+            color: #fff;
+        }
+
+        .hot-keywords li.col-1-3 {
+            grid-column: 1/3;
+        }
+
+        .hot-keywords li.col-3-5 {
+            grid-column: 3/5;
+        }
+
+        /* 百度图片新闻 */
+
+        .image-list-wrapper {
+            display: grid;
+            grid-template-columns: repeat(5, 187px);
+            grid-column-gap: 12px;
+        }
+
+        .image-list-wrapper img {
+            max-width: 100%;
+        }
+
+        /* 淘宝精选 */
+
+        .taobao-choice-wall {
+            display: grid;
+            grid-template-columns: repeat(3, 173px);
+            grid-template-rows: repeat(2, 100px);
+            box-sizing: border-box;
+        }
+
+        .taobao-choice-wall img {
+            max-width: 100%;
+        }
+
+        .taobao-choice-wall li {
+            border: 1px solid #eee;
+            /* 实现单边线 */
+            margin: -1px -1px;
+        }
+
+        .taobao-choice-wall li.row-1-2 {
+            grid-row: 1/3;
+        }
+
+        /* 品质生活 */
+
+        .quality-list {
+            display: grid;
+            grid-template-columns: [left] 294px [right] 294px;
+
+            font-family: tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53', sans-serif;
+            background: #fff;
+        }
+
+        .quality-list .item {
+            border: 1px solid #eee;
+            margin: -1px -1px 0 0;
+        }
+
+        .quality-list .item-hd .title {
+            font-size: 18px;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .quality-list .item-hd .subtitle {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .quality-list .left {
+            display: grid;
+            grid-template-rows: repeat(6, 119px);
+        }
+
+        .quality-list .left .item-row-1_4 {
+            grid-row: 1/4;
+        }
+
+        .quality-list .left .img-wrapper {
+            background: #4f4f4f;
+            height: 317px;
+            overflow: hidden;
+        }
+
+        .quality-list .left .img-wrapper img {
+            opacity: .9;
+        }
+
+        .quality-list .left .item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .quality-list .left .item:first-child {
+            flex: 1;
+        }
+
+        .quality-list .right {
+            display: grid;
+            grid-template-rows: repeat(3, 238px);
+
+        }
+
+        .quality-list .right .item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 魔盒 */
+
+        .magic-box {
+            margin-bottom: 10px;
+            height: 240px;
+            overflow: hidden;
+        }
+
+        .magic-box ul {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 73px);
+            grid-gap: 10px;
+            height: 240px;
+        }
+
+        .magic-box ul li {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgb(134, 189, 31);
+
+        }
+
+        .magic-box ul li a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .magic-box ul li.item-row-1_3 {
+            grid-row: 1/3;
+        }
+
+        .magic-box ul li.item-col-1_3 {
+            grid-column: 1/3;
+        }
+
+        .magic-box ul li.active {
+            background: blueviolet;
+        }
+
+        .radio-group {
+            font-size: 12px; 
+            padding:10px;
+            margin-bottom:10px;
+            background:#999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="item">
+            <div class="list">
+                <ul>
+                    <li>
+                        <a href="" class="media-box">
+                            <div class="photo">
+                                <img src="./images/photo.jpg" alt="">
+                            </div>
+                            <div class="intro">
+                                <h4>Hello World!</h4>
+                                <p class="desc">
+                                    My name is vector, I am a developer and I am very happy to meet you here
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- vue脚本 -->
+            <h3>演示魔盒</h3>
+            <div id="magicBox">
+                <div class="radio-group">
+                    <div>
+                        <h4>选择列start</h4>
+                        <span>
+                            <input type="radio" id="row1" value="1" v-model="gridColumn.start">
+                            <label for="row1">1</label>
+                        </span>
+                        <span>
+                            <input type="radio" id="row2" value="2" v-model="gridColumn.start">
+                            <label for="row2">2</label>
+                        </span>
+                        <span>
+                            <input type="radio" id="row3" value="3" v-model="gridColumn.start">
+                            <label for="row3">3</label>
+                        </span>
+                        <span>
+                            <input type="radio" id="row4" value="4" v-model="gridColumn.start">
+                            <label for="row4">4</label>
+                        </span>
+                    </div>
+                    <div>
+                        <h4>选择列end</h4>
+                        <span>
+                            <input type="radio" id="col_end1" value="1" v-model="gridColumn.end">
+                            <label for="col_end1">1</label>
+                        </span>
+                        <span>
+                            <input type="radio" id="col_end2" value="2" v-model="gridColumn.end">
+                            <label for="col_end2">2</label>
+                        </span>
+                        <span>
+                            <input type="radio" id="col_end3" value="3" v-model="gridColumn.end">
+                            <label for="col_end3">3</label>
+                        </span>
+                        <span>
+                            <input type="radio" id="col_end4" value="4" v-model="gridColumn.end">
+                            <label for="col_end4">4</label>
+                        </span>
+                    </div>
+                </div>
+                <div class="radio-group">
+                    <div>
+                        <h4>选择行start</h4>
+                        <span>
+                            <input type="radio" id="gridRow_start1" value="1" v-model="gridRow.start">
+                            <label for="gridRow_start1">1</label>
+                        </span>
+                        <span>
+                            <input type="radio" id="gridRow_start2" value="2" v-model="gridRow.start">
+                            <label for="gridRow_start2">2</label>
+                        </span>
+                        <span>
+                            <input type="radio" id="gridRow_start3" value="3" v-model="gridRow.start">
+                            <label for="gridRow_start">3</label>
+                        </span>
+                        <span>
+                            <input type="radio" id="gridRow_start4" value="4" v-model="gridRow.start">
+                            <label for="gridRow_start4">4</label>
+                        </span>
+                    </div>
+                    <div>
+                        <h4>选择行end</h4>
+                        <span>
+                            <input type="radio" id="gridRow_end1" value="1" v-model="gridRow.end">
+                            <label for="gridRow_end1">1</label>
+                        </span>
+                        <span>
+                            <input type="radio" id="gridRow_end2" value="2" v-model="gridRow.end">
+                            <label for="gridRow_end2">2</label>
+                        </span>
+                        <span>
+                            <input type="radio" id="gridRow_end3" value="3" v-model="gridRow.end">
+                            <label for="gridRow_end3">3</label>
+                        </span>
+                        <span>
+                            <input type="radio" id="gridRow_end4" value="4" v-model="gridRow.end">
+                            <label for="gridRow_end4">4</label>
+                        </span>
+                    </div>
+                </div>
+                <div class="magic-box">
+                    <ul>
+                        <template v-for="(item,index) in brands">
+                            <li :style="{gridColumn:index === selectedIndex ? item.gridColumn.start+'/'+item.gridColumn.end : '',gridRow:index === selectedIndex ? item.gridRow.start+'/'+item.gridRow.end : ''}" :class="{active:index === selectedIndex}"
+                                :key="index" @click="clickBox(index)">
+                                <a>{{item.name}}</a>
+                            </li>
+                        </template>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="item main-container">
+            <div class="main-box">
+                <h2>Hi,Here are some common Grid layout examples</h2>
+            </div>
+            <!-- 图文混排 -->
+            <div class="mod-title">
+                <h4>图文混排</h4>
+            </div>
+            <div class="list">
+                <ul>
+                    <li>
+                        <a href="" class="media-box">
+                            <div class="photo">
+                                <img src="./images/photo.jpg" alt="">
+                            </div>
+                            <div class="intro">
+                                <h4>Hello World!</h4>
+                                <p class="desc">
+                                    My name is vector, I am a developer and I am very happy to meet you here
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="media-box">
+                            <div class="photo">
+                                <img src="./images/photo.jpg" alt="">
+                            </div>
+                            <div class="intro">
+                                <h4>Hello World!</h4>
+                                <p class="desc">
+                                    My name is vector, I am a developer and I am very happy to meet you here
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="media-box">
+                            <div class="photo">
+                                <img src="./images/photo.jpg" alt="">
+                            </div>
+                            <div class="intro">
+                                <h4>Hello World!</h4>
+                                <p class="desc">
+                                    My name is vector, I am a developer and I am very happy to meet you here
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="media-box">
+                            <div class="photo">
+                                <img src="./images/photo.jpg" alt="">
+                            </div>
+                            <div class="intro">
+                                <h4>Hello World!</h4>
+                                <p class="desc">
+                                    My name is vector, I am a developer and I am very happy to meet you here
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="media-box">
+                            <div class="photo">
+                                <img src="./images/photo.jpg" alt="">
+                            </div>
+                            <div class="intro">
+                                <h4>Hello World!</h4>
+                                <p class="desc">
+                                    My name is vector, I am a developer and I am very happy to meet you here
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- 百度热词 -->
+            <div class="mod-title">
+                <h4>百度热词</h4>
+            </div>
+            <ul class="hot-keywords">
+                <li class="col-1-3">
+                    <a href="">
+                        习近平：像对待
+                        <br>生命一样
+                        <br>对待生态环境
+                    </a>
+                </li>
+                <li class="col-3-5">
+                    <a href="">
+                        领航新时代
+                        <br>中国经济航船
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        天宫一号
+                        <br>绚烂谢幕
+                    </a>
+                </li>
+                <li>
+                    <a href="">全国铁路
+                        <br>新运行图</a>
+                </li>
+                <li>
+                    <a href="">
+                        西湖大学
+                        <br>正式成立
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        人民币升值
+                        <br>创新高
+                    </a>
+                </li>
+                <li>
+                    <a href="">5G国际标准
+                        <br>或6月出炉</a>
+                </li>
+                <li>
+                    <a href="">长春首家
+                        <br>无人超市</a>
+                </li>
+                <li>
+                    <a href="">全国铁路
+                        <br>新运行图</a>
+                </li>
+                <li>
+                    <a href="">
+                        西湖大学
+                        <br>正式成立
+                    </a>
+                </li>
+            </ul>
+            <!-- 百度图片新闻 -->
+            <div class="mod-title">
+                <h4>新闻图片</h4>
+            </div>
+            <div class="image-list">
+                <div class="image-list-wrapper">
+                    <div class="image-list-item">
+                        <a href="#" title="彭于晏陈伟霆都这么胖过" target="_blank" mon="c=sportnews&amp;ct=0&amp;col=22&amp;pn=1&amp;a=12">
+                            <img src="https://news.baidu.com/z/resource/r/image/2018-04-03/ee6e3e64faa90473947ebebd5b6737a7.jpg">
+                        </a>
+                        <a href="#" mon="c=sportnews&amp;ct=0&amp;col=22&amp;pn=1&amp;a=9" class="txt" target="_blank">彭于晏陈伟霆都这么胖过</a>
+                    </div>
+                    <div class="image-list-item">
+                        <a href="#" title="马思纯邓伦甜蜜互动撒糖" target="_blank" mon="c=sportnews&amp;ct=0&amp;col=22&amp;pn=2&amp;a=12">
+                            <img src="https://news.baidu.com/z/resource/r/image/2018-04-03/9d6fbaf394aec20c1efe847899eb1f75.jpg">
+                        </a>
+                        <a href="#" mon="c=sportnews&amp;ct=0&amp;col=22&amp;pn=2&amp;a=9" class="txt" target="_blank">马思纯邓伦甜蜜互动撒糖</a>
+                    </div>
+                    <div class="image-list-item">
+                        <a href="#" title="钟欣潼暖春写真曝光" target="_blank" mon="c=sportnews&amp;ct=0&amp;col=22&amp;pn=3&amp;a=12">
+                            <img src="https://news.baidu.com/z/resource/r/image/2018-04-03/2dad55bf20e54b2b691eb0a2935957e3.jpg">
+                        </a>
+                        <a href="#" mon="c=sportnews&amp;ct=0&amp;col=22&amp;pn=3&amp;a=9" class="txt" target="_blank">钟欣潼暖春写真曝光</a>
+                    </div>
+                    <div class="image-list-item">
+                        <a href="#" title="51岁张宇头发花白显老态" target="_blank" mon="c=sportnews&amp;ct=0&amp;col=22&amp;pn=4&amp;a=12">
+                            <img src="https://news.baidu.com/z/resource/r/image/2018-04-03/869fef529e2b6a6cad37d595290c2099.jpg">
+                        </a>
+                        <a href="#" mon="c=sportnews&amp;ct=0&amp;col=22&amp;pn=4&amp;a=9" class="txt" target="_blank">51岁张宇头发花白显老态</a>
+                    </div>
+                    <div class="image-list-item">
+                        <a href="#" title="明星们遇到前任啥反应？" target="_blank" mon="c=sportnews&amp;ct=0&amp;col=22&amp;pn=5&amp;a=12">
+                            <img src="https://news.baidu.com/z/resource/r/image/2018-04-03/8884b5ea754300f908cf9763e4746b85.jpg">
+                        </a>
+                        <a href="#" mon="c=sportnews&amp;ct=0&amp;col=22&amp;pn=5&amp;a=9" class="txt" target="_blank">明星们遇到前任啥反应？</a>
+                    </div>
+                </div>
+            </div>
+            <!-- 淘宝精选 -->
+            <div class="mod-title">
+                <h4>淘宝精选</h4>
+            </div>
+            <ul class="taobao-choice-wall">
+                <li class="row-1-2">
+                    <img src="http://img.alicdn.com/imgextra/i3/5/TB296UXppXXXXabXpXXXXXXXXXX_!!5-2-yamato.png" alt="">
+                </li>
+                <li>
+                    <img src="http://img.alicdn.com/imgextra/i4/88/TB2igHicr5K.eBjy0FfXXbApVXa_!!88-0-yamato.jpg" alt="">
+                </li>
+                <li>
+                    <img src="http://img.alicdn.com/imgextra/i3/47/TB2DBhcg3xlpuFjSszgXXcJdpXa_!!47-0-yamato.jpg" alt="">
+                </li>
+                <li>
+                    <img src="http://img.alicdn.com/imgextra/i4/5/TB2AZHNsXXXXXbmXXXXXXXXXXXX_!!5-0-yamato.jpg" alt="">
+                </li>
+                <li>
+                    <img src="http://img.alicdn.com/imgextra/i2/156/TB2G9JLXgCN.eBjSZFoXXXj0FXa_!!156-0-yamato.jpg" alt="">
+                </li>
+            </ul>
+            <!-- 淘宝品质之家 -->
+            <div class="mod-title">
+                <h4>品质生活家</h4>
+            </div>
+            <div class="quality-inner">
+                <div class="quality-list">
+                    <div class="left">
+                        <div class="item item-row-1_4">
+                            <a href="#" class="img-wrapper main-img">
+                                <img src="https://gw.alicdn.com/tfs/TB1hJ2KX6ihSKJjy0FlXXadEXXa-254-318.png" alt="极有家">
+                            </a>
+                        </div>
+                        <a class="item" href="#">
+                            <div class="item-hd">
+                                <h4 class="brand-item">
+                                    <span class="title">极有家</span>
+                                </h4>
+                                <p class="subtitle">
+                                    过我想要的生活
+                                </p>
+                            </div>
+                            <div class="item-bd">
+                                <img src="https://img.alicdn.com/imgextra/i4/99/TB2kAepttFopuFjSZFHXXbSlXXa_!!99-2-luban.png_100x100q90.jpg_.webp" alt="极有家">
+                            </div>
+                        </a>
+                        <a class="item" href="#">
+                            <div class="item-hd">
+                                <h4 class="brand-item">
+                                    <span class="title">淘宝花鸟</span>
+                                </h4>
+                                <p class="subtitle">
+                                    园艺宠物爱好者集中营
+                                </p>
+                            </div>
+                            <div class="item-bd">
+                                <img src="https://img.alicdn.com/imgextra/i3/81/TB282btfoEIL1JjSZFFXXc5kVXa_!!81-2-luban.png_100x100q90.jpg_.webp" alt="淘宝花鸟">
+                            </div>
+                        </a>
+                        <a class="item" href="#">
+                            <div class="item-hd">
+                                <h4 class="brand-item">
+                                    <span class="title">聚名品</span>
+                                </h4>
+                                <p class="subtitle">
+                                    甄选大牌尖货
+                                </p>
+                            </div>
+                            <div class="item-bd">
+                                <img src="https://img.alicdn.com/imgextra/i4/159/TB2aszIdwMPMeJjy1XdXXasrXXa_!!159-2-luban.png_100x100q90.jpg_.webp" alt="聚名品">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="right">
+                        <div class="item">
+                            <h4 class="item-hd brand-item">
+                                <a class="title" href="#">亲宝贝</a>
+                                <span class="subtitle">享受育儿新方式</span>
+                            </h4>
+                            <div class="item-bd">
+                                <a href="#" class="fl">
+                                    <img src="https://img.alicdn.com/i3/TB2t2iwX5wIL1JjSZFsXXcXFFXa_!!106-2-luban.png_120x120q90.jpg_.webp" alt="亲宝贝">
+                                </a>
+                                <a href="#" class="fl second">
+                                    <img src="https://img.alicdn.com/imgextra/i1/139/TB2AE9vXqmgSKJjSspiXXXyJFXa_!!139-2-luban.png_120x120q90.jpg_.webp" alt="亲宝贝">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <h4 class="item-hd brand-item">
+                                <a class="title" href="#">淘宝教育</a>
+                                <span class="subtitle">给你未来的学习体验</span>
+                            </h4>
+                            <div class="item-bd clearfix">
+                                <a href="#" class="fl">
+                                    <img src="https://img.alicdn.com/i3/TB2oOGMbv6H8KJjSspmXXb2WXXa_!!132-2-luban.png_120x120q90.jpg_.webp" alt="淘宝教育">
+                                </a>
+                                <a href="#" class="fl second">
+                                    <img src="https://img.alicdn.com/tfs/TB1B_UBf3vD8KJjy0FlXXagBFXa-800-800.jpg_120x120q90.jpg_.webp" alt="淘宝教育">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="item " data-spm-ab="tszg">
+                            <h4 class="item-hd brand-item">
+                                <a class="title" href="#">特色中国</a>
+                                <span class="subtitle">地道才够味</span>
+                            </h4>
+                            <div class="item-bd">
+                                <a href="#">
+                                    <img src="https://img.alicdn.com/imgextra/i2/147/TB2DdKHqSFjpuFjSspbXXXagVXa_!!147-2-luban.png_120x120q90.jpg_.webp" alt="特色中国">
+                                </a>
+                                <a href="#">
+                                    <img src="https://img.alicdn.com/imgextra/i1/111/TB21.PZdwoQMeJjy0FoXXcShVXa_!!111-2-luban.png_120x120q90.jpg_.webp" alt="特色中国">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <!-- 魔盒 -->
+            <div class="mod-title">
+                <h4>九宫格</h4>
+            </div>
+            <div class="magic-box">
+                <ul>
+                    <li>
+                        <a href="">天猫</a>
+                    </li>
+                    <li>
+                        <a href="">淘宝</a>
+                    </li>
+                    <li>
+                        <a href="">聚划算</a>
+                    </li>
+                    <li>
+                        <a href="">支付宝</a>
+                    </li>
+                    <li>
+                        <a href="">飞猪</a>
+                    </li>
+                    <li>
+                        <a href="">旺旺</a>
+                    </li>
+                    <li>
+                        <a href="">阿里云</a>
+                    </li>
+                    <li>
+                        <a href="">虾米音乐</a>
+                    </li>
+                    <li>
+                        <a href="">高德地图</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mod-title">
+                <h4>变形九宫格1</h4>
+            </div>
+            <div class="magic-box">
+                <ul>
+                    <li class="item-row-1_3">
+                        <a href="">天猫</a>
+                    </li>
+
+                    <li>
+                        <a href="">聚划算</a>
+                    </li>
+                    <li>
+                        <a href="">支付宝</a>
+                    </li>
+                    <li>
+                        <a href="">飞猪</a>
+                    </li>
+                    <li>
+                        <a href="">旺旺</a>
+                    </li>
+                    <li>
+                        <a href="">阿里云</a>
+                    </li>
+                    <li>
+                        <a href="">虾米音乐</a>
+                    </li>
+                    <li>
+                        <a href="">高德地图</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mod-title">
+                <h4>变形九宫格2</h4>
+            </div>
+            <div class="magic-box">
+                <ul>
+                    <li class="item-row-1_3 item-col-1_3">
+                        <a href="">天猫</a>
+                    </li>
+                    <li>
+                        <a href="">淘宝</a>
+                    </li>
+                    <li>
+                        <a href="">聚划算</a>
+                    </li>
+                    <li>
+                        <a href="">支付宝</a>
+                    </li>
+                    <li>
+                        <a href="">飞猪</a>
+                    </li>
+                    <li>
+                        <a href="">旺旺</a>
+                    </li>
+                    <li>
+                        <a href="">阿里云</a>
+                    </li>
+                    <li>
+                        <a href="">虾米音乐</a>
+                    </li>
+                    <li>
+                        <a href="">高德地图</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+    <script>
+        new Vue({
+            el: '#magicBox',
+            data: {
+                brands: [{
+                    name: '天猫',
+                    gridRow: {
+                        start: 'auto',
+                        end: 'auto',
+                    },
+                    gridColumn: {
+                        start: 'auto',
+                        end: 'auto',
+                    }
+                }, {
+                    name: '淘宝',
+                    gridRow: {
+                        start: 'auto',
+                        end: 'auto',
+                    },
+                    gridColumn: {
+                        start: 'auto',
+                        end: 'auto',
+                    }
+                }, {
+                    name: '聚划算',
+                    gridRow: {
+                        start: 'auto',
+                        end: 'auto',
+                    },
+                    gridColumn: {
+                        start: 'auto',
+                        end: 'auto',
+                    }
+                }, {
+                    name: '支付宝',
+                    gridRow: {
+                        start: 'auto',
+                        end: 'auto',
+                    },
+                    gridColumn: {
+                        start: 'auto',
+                        end: 'auto',
+                    }
+                }, {
+                    name: '飞猪',
+                    gridRow: {
+                        start: 'auto',
+                        end: 'auto',
+                    },
+                    gridColumn: {
+                        start: 'auto',
+                        end: 'auto',
+                    }
+                }, {
+                    name: '旺旺',
+                    gridRow: {
+                        start: 'auto',
+                        end: 'auto',
+                    },
+                    gridColumn: {
+                        start: 'auto',
+                        end: 'auto',
+                    }
+                }, {
+                    name: '阿里云',
+                    gridRow: {
+                        start: 'auto',
+                        end: 'auto',
+                    },
+                    gridColumn: {
+                        start: 'auto',
+                        end: 'auto',
+                    }
+                }, {
+                    name: '虾米音乐',
+                    gridRow: {
+                        start: 'auto',
+                        end: 'auto',
+                    },
+                    gridColumn: {
+                        start: 'auto',
+                        end: 'auto',
+                    }
+                }, {
+                    name: '高德地图',
+                    gridRow: {
+                        start: 'auto',
+                        end: 'auto',
+                    },
+                    gridColumn: {
+                        start: 'auto',
+                        end: 'auto',
+                    }
+                }],
+                selectedIndex: 0,
+                gridColumn: {
+                    start: 1,
+                    end: 1,
+                },
+                gridRow: {
+                    start: 1,
+                    end: 1,
+                },
+            },
+            watch: {
+                gridColumn: {
+                    handler:function (val,oldVal) {
+                        console.log('what',val,oldVal)
+                        this.brands[this.selectedIndex].gridColumn.start = val.start;
+                        this.brands[this.selectedIndex].gridColumn.end = val.end;
+                    },
+                    deep:true,
+                },
+                gridRow: {
+                    handler:function (val,oldVal) {
+                        this.brands[this.selectedIndex].gridRow.start = val.start;
+                        this.brands[this.selectedIndex].gridRow.end = val.end;
+                    },
+                    deep:true,
+                }
+            },
+            computed: {
+                
+            },
+            methods: {
+                clickBox: function (index) {
+                    this.selectedIndex = index;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
