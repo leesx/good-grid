@@ -43,4 +43,4 @@
 
 > align-items 定义网格布局中的子元素的垂直方向的布局,可取值 [start | end | center | stretch]
 
-> jusity-content 
+![demo21](./images/demo1.png)
