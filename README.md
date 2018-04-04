@@ -46,6 +46,33 @@
 > align-items 定义网格布局中的子元素的垂直方向的布局,可取值 [start | end | center | stretch]
 
 
+#### 实现1px边框
+
+grid还没轻松设置元素边框的属性，希望以后有相关的属性，现在只能通过近似hack的方式做到。下面介绍一个
+
+给父级元素设置`background-color: rgb(198,164,154);grid-gap:1px;border: 1px solid rgb(198,164,154);`;
+给子元素设置 背景色 `background-color: #fff;`
+
+```
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3,100px);
+  width: 304px;
+  grid-template-rows: repeat(3, 100px);
+  background-color: rgb(198,164,154);
+  grid-gap:1px;
+  border: 1px solid rgb(198,164,154);
+}
+
+.grid > * {
+  background-color: #fff;
+  padding: 20px;
+}
+```
+
+或者给子元素直接设置边框，通过margin负值间接实现。
+
+
 > demo1 图文混排
 
 ![demo21](./images/demo1.png)
